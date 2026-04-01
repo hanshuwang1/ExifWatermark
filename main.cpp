@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     imageInfo.locationInfo.latitude = degrees + minutes / 60.0 + seconds / 3600.0;
 
     /* (3) GPS to Real Position */
-    std::string baiduMap_ak = "8deQe2VmkpheKZDhpQFom6O7nEUOspcb";
+    std::string baiduMap_ak = "your baidu map ak"; // visit https://lbsyun.baidu.com/apiconsole/key
     BaiduReverseGeocode_Offical(baiduMap_ak, 
         imageInfo.locationInfo.latitude, 
         imageInfo.locationInfo.longitude,
@@ -60,21 +60,21 @@ int main(int argc, char* argv[]) {
     std::cout << "街道: " << imageInfo.locationInfo.street << std::endl;
 
     /* (4) add EXIF info to image bottom */
-    // addExifInfoToBottom_OpenCV(
-    //     path,
-    //     path.substr(0, path.find_last_of('.')) + "opencv.jpg",
-    //     imageInfo.date,
-    //     imageInfo.cameraInfo.make + " " + imageInfo.cameraInfo.model,
-    //     imageInfo.cameraInfo.FocalLength + " " + imageInfo.cameraInfo.ExposureTime + " " + imageInfo.cameraInfo.FNumber + " ISO" + imageInfo.cameraInfo.ISO,
-    //     imageInfo.locationInfo.province + " " + imageInfo.locationInfo.city + " " + imageInfo.locationInfo.district
-    // );
-    addExifInfoToBottom_CImg(
+    addExifInfoToBottom_OpenCV(
         path,
-        path.substr(0, path.find_last_of('.')) + "CImg.jpg",
+        path.substr(0, path.find_last_of('.')) + "opencv.jpg",
         imageInfo.date,
-        imageInfo.cameraInfo.make + "  " + imageInfo.cameraInfo.model,
-        imageInfo.cameraInfo.FocalLength + "  " + imageInfo.cameraInfo.ExposureTime + "  " + imageInfo.cameraInfo.FNumber + "  ISO " + imageInfo.cameraInfo.ISO,
-        imageInfo.locationInfo.province + "  " + imageInfo.locationInfo.city + "  " + imageInfo.locationInfo.district
+        imageInfo.cameraInfo.make + " " + imageInfo.cameraInfo.model,
+        imageInfo.cameraInfo.FocalLength + " " + imageInfo.cameraInfo.ExposureTime + " " + imageInfo.cameraInfo.FNumber + " ISO" + imageInfo.cameraInfo.ISO,
+        imageInfo.locationInfo.province + " " + imageInfo.locationInfo.city + " " + imageInfo.locationInfo.district
     );
+    // addExifInfoToBottom_CImg(
+    //     path,
+    //     path.substr(0, path.find_last_of('.')) + "CImg.jpg",
+    //     imageInfo.date,
+    //     imageInfo.cameraInfo.make + "  " + imageInfo.cameraInfo.model,
+    //     imageInfo.cameraInfo.FocalLength + "  " + imageInfo.cameraInfo.ExposureTime + "  " + imageInfo.cameraInfo.FNumber + "  ISO " + imageInfo.cameraInfo.ISO,
+    //     imageInfo.locationInfo.province + "  " + imageInfo.locationInfo.city + "  " + imageInfo.locationInfo.district
+    // );
     return 0;
 }
