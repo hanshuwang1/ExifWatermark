@@ -39,3 +39,13 @@
 
 # debug information files
 *.dwo
+
+# CMake generated files
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# project files
+*.code-workspace

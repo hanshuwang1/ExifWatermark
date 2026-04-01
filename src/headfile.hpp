@@ -1,0 +1,116 @@
+#ifndef _DEMO_HEADFILE_HPP
+#define _DEMO_HEADFILE_HPP
+#include <exiv2/exiv2.hpp>
+#include <iostream>
+#include <iomanip>
+#include <map>
+template<typename Stream = std::ostream>
+void printExifDatum(const Exiv2::Exifdatum& datum, Stream& os = std::cout, int indent = 0)
+{
+    std::string key   = datum.key();        
+    std::string label = datum.tagLabel();     
+    std::string value = datum.toString();
+    std::string type  = Exiv2::TypeInfo::typeName(datum.typeId());
+
+    os << std::string(indent * 2, ' ') 
+       << std::left << std::setw(40) << key 
+       << " | " << std::left << std::setw(28) << label
+       << " | " << std::setw(10) << type
+       << " | " << value << "\n";
+}
+
+template<typename Stream = std::ostream>
+void printExifData(const Exiv2::ExifData& exifData, Stream& os = std::cout, int indent = 0)
+{
+    if (exifData.empty()) {
+        os << std::string(indent * 2, ' ') << "No EXIF data found.\n";
+        return;
+    }
+
+    os << std::string(indent * 2, ' ') 
+       << "=================== EXIF Data ===================\n";
+    os << std::string(indent * 2, ' ')
+       << std::left << std::setw(40) << "Key"
+       << " | " << std::left << std::setw(28) << "Tag Label"
+       << " | " << std::setw(10) << "Type"
+       << " | Value\n";
+    os << std::string(indent * 2, ' ') 
+       << std::string(120, '-') << "\n";
+
+    for (const auto& datum : exifData) {
+        printExifDatum(datum, os, indent);
+    }
+
+    os << std::string(indent * 2, ' ') 
+       << "=================================================\n";
+}
+
+Exiv2::ExifData readExifData(const std::string& imagePath);
+typedef struct{
+    std::string make;           // 设备制造商
+    std::string model;          // 设备型号
+    std::string software;       // 设备软件
+    std::string ExposureTime;   // 快门速度
+    std::string FNumber;        // 光圈大小
+    std::string ISO;            // 感光度
+    std::string FocalLength;    // 焦距
+}CAMERA_INFO_T;
+typedef struct{
+    double latitude;
+    double longitude;
+    std::string province;
+    std::string city;
+    std::string district;
+    std::string street;
+}LOCATION_INFO_T;
+typedef struct {
+    std::string date;
+    CAMERA_INFO_T cameraInfo;
+    LOCATION_INFO_T locationInfo;
+}IMAGE_INFO_T;
+int BaiduReverseGeocode_Offical(
+    std::string ak, 
+    double latitude, 
+    double longitude,
+    IMAGE_INFO_T& imageInfo
+);
+void addExifInfoToBottom_OpenCV(
+    const std::string& inputPath,
+    const std::string& outputPath,
+    const std::string& dateTime,
+    const std::string& cameraLens,
+    const std::string& exposure,
+    const std::string& location);
+void addExifInfoToBottom_CImg(
+    const std::string& inputPath,
+    const std::string& outputPath,
+    const std::string& dateTime,
+    const std::string& cameraLens,
+    const std::string& exposure,
+    const std::string& location);
+static const std::map<int, std::string> BaiduStatusMessages = {
+    {0,   "正常"},
+    {1,   "服务器内部错误 该服务响应超时或系统内部错误，请留下联系方式"},
+    {10,  "上传内容超过8M Post上传数据不能超过8M"},
+    {101, "AK参数不存在 请求消息没有携带AK参数"},
+    {102, "MCODE参数不存在，mobile类型mcode参数必需 对于Mobile类型的应用请求需要携带mcode参数，该错误码代表服务器没有解析到mcode"},
+    {200, "APP不存在，AK有误请检查再重试 根据请求的ak，找不到对应的APP"},
+    {201, "APP被用户自己禁用，请在控制台解禁"},
+    {202, "APP被管理员删除 恶意APP被管理员删除"},
+    {203, "APP类型错误 当前API控制台支持Server(类型1), Mobile(类型2, 新版控制台区分为Mobile_Android(类型21)及Mobile_IPhone（类型22））及Browser（类型3），除此之外其他类型认为是APP类型错误"},
+    {210, "APP IP校验失败 在申请Server类型应用的时候选择IP校验，需要填写IP白名单，如果当前请求的IP地址不在IP白名单或者不是0.0.0.0/0就认为IP校验失败"},
+    {211, "APP SN校验失败 Server类型APP有两种校验方式IP校验和SN校验，当用户请求的SN和服务端计算出来的SN不相等的时候提示SN校验失败"},
+    {220, "APP Referer校验失败 浏览器类型的APP会校验referer字段是否存切在referer白名单里面，否则返回该错误码"},
+    {230, "APP Mcode码校验失败 服务器能解析到mcode，但和数据库中不一致，请携带正确的mcode"},
+    {240, "APP 服务被禁用 用户在API控制台中创建或设置某APP的时候禁用了某项服务"},
+    {250, "用户不存在 根据请求的user_id, 数据库中找不到该用户的信息，请携带正确的user_id"},
+    {251, "用户被自己删除 该用户处于未激活状态"},
+    {252, "用户被管理员删除 恶意用户被加入黑名单"},
+    {260, "服务不存在 服务器解析不到用户请求的服务名称"},
+    {261, "服务被禁用 该服务已下线"},
+    {301, "永久配额超限，限制访问配额超限，如果想增加配额请联系我们"},
+    {302, "天配额超限，限制访问配额超限，如果想增加配额请联系我们"},
+    {401, "当前并发量已经超过约定并发配额，限制访问并发控制超限，请控制并发量或联系我们"},
+    {402, "当前并发量已经超过约定并发配额，并且服务总并发量也已经超过设定的总并发配额，限制访问并发控制超限，请控制并发量或联系我们"}
+};
+#endif // _DEMO_HEADFILE_HPP
