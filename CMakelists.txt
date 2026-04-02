@@ -31,10 +31,22 @@ add_subdirectory(src/ReadExif)
 # add_subdirectory(external)
 
 # install and release
-# install(TARGETS ExifWatermarker
-#     RUNTIME DESTINATION .
-#     COMPONENT Runtime
-# )
+install(TARGETS ExifWatermarker
+    RUNTIME DESTINATION .
+    COMPONENT Runtime
+)
+# install dependency exiv2
+if(WIN32)
+    install(FILES "external/exiv2/bin/libexiv2.dll"
+         DESTINATION . 
+         COMPONENT Runtime)
+endif()
+
+#install assert
+install(DIRECTORY assets
+    DESTINATION .
+    COMPONENT Runtime
+)
 
 # install(TARGETS ExifWatermarker
 #     RUNTIME_DEPENDENCIES

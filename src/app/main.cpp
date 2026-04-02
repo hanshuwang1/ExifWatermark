@@ -1,9 +1,9 @@
-// #include "./external/exiv2/include/exiv2/exiv2.hpp"
+#include <filesystem>
 #include "AddExif/AddExifCImg.hpp"
 #include "AddExif/AddExifOpencv.hpp"
 #include "Baidu/BaiduReverseGeocode.hpp"
 #include "ReadExif/ReadExif.hpp"
-
+namespace fs = std::filesystem;
 static std::string formatFloat(double value, int digits) {
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(digits) << value;
@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     /* (1) get image path */
+    // fs::current_path(fs::path(argv[0]).parent_path());
     std::string path;
     if (argc == 2) {
         path = argv[1];
@@ -50,8 +51,8 @@ int main(int argc, char* argv[]) {
     imageInfo.locationInfo.latitude = degrees + minutes / 60.0 + seconds / 3600.0;
 
     /* (3) GPS to Real Position */
-    std::string baiduMap_ak = "your baidumap ak"; // visit https://lbsyun.baidu.com/apiconsole/key
-    std::string baiduMap_sk = "your baidumap sk";
+    std::string baiduMap_ak = "9vfAvAFlaNNDH8Ea2gjVtyDDWDYEP1jM"; // visit https://lbsyun.baidu.com/apiconsole/key
+    std::string baiduMap_sk = "rxgdkXTS8N9dhah86C2b9yZvt976YT9m";
     BaiduReverseGeocode_Offical(baiduMap_ak, baiduMap_sk,
         imageInfo.locationInfo.latitude, 
         imageInfo.locationInfo.longitude,
