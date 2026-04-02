@@ -51,3 +51,4 @@ Makefile
 *.code-workspace
 .vscode/
 release/
+*.zip

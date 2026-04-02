@@ -15,3 +15,4 @@ cmake --install build --prefix your_path --config Release
 ![example](./assets/dslopencv.jpg)
 # tips
 - chinese characters in path is not allowed
+- according to baidumap regulation, any individual is strictly prohibited from transferring, lending the obtained AK or related content developed based on them to any other third party. so release is no longer usable.
