@@ -47,7 +47,6 @@ install(DIRECTORY assets
     DESTINATION .
     COMPONENT Runtime
 )
-
 # install(TARGETS ExifWatermarker
 #     RUNTIME_DEPENDENCIES
 #     COMPONENT Runtime

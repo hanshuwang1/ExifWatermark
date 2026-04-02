@@ -16,7 +16,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     /* (1) get image path */
-    // fs::current_path(fs::path(argv[0]).parent_path());
     std::string path;
     if (argc == 2) {
         path = argv[1];
@@ -51,8 +50,8 @@ int main(int argc, char* argv[]) {
     imageInfo.locationInfo.latitude = degrees + minutes / 60.0 + seconds / 3600.0;
 
     /* (3) GPS to Real Position */
-    std::string baiduMap_ak = "9vfAvAFlaNNDH8Ea2gjVtyDDWDYEP1jM"; // visit https://lbsyun.baidu.com/apiconsole/key
-    std::string baiduMap_sk = "rxgdkXTS8N9dhah86C2b9yZvt976YT9m";
+    std::string baiduMap_ak = "your_baidu_map_ak"; // visit https://lbsyun.baidu.com/apiconsole/key
+    std::string baiduMap_sk = "your_baidu_map_sk";
     BaiduReverseGeocode_Offical(baiduMap_ak, baiduMap_sk,
         imageInfo.locationInfo.latitude, 
         imageInfo.locationInfo.longitude,
