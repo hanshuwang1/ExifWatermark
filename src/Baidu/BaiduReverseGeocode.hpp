@@ -1,51 +1,9 @@
-#ifndef _DEMO_HEADFILE_HPP
-#define _DEMO_HEADFILE_HPP
-#include <exiv2/exiv2.hpp>
-#include <iostream>
-#include <iomanip>
+#ifndef _EXIFWATERMARK_INCLUDE_GEOCOORDTOLOCAL_HPP
+#define _EXIFWATERMARK_INCLUDE_GEOCOORDTOLOCAL_HPP
+
+#include <string>
 #include <map>
-template<typename Stream = std::ostream>
-void printExifDatum(const Exiv2::Exifdatum& datum, Stream& os = std::cout, int indent = 0)
-{
-    std::string key   = datum.key();        
-    std::string label = datum.tagLabel();     
-    std::string value = datum.toString();
-    std::string type  = Exiv2::TypeInfo::typeName(datum.typeId());
 
-    os << std::string(indent * 2, ' ') 
-       << std::left << std::setw(40) << key 
-       << " | " << std::left << std::setw(28) << label
-       << " | " << std::setw(10) << type
-       << " | " << value << "\n";
-}
-
-template<typename Stream = std::ostream>
-void printExifData(const Exiv2::ExifData& exifData, Stream& os = std::cout, int indent = 0)
-{
-    if (exifData.empty()) {
-        os << std::string(indent * 2, ' ') << "No EXIF data found.\n";
-        return;
-    }
-
-    os << std::string(indent * 2, ' ') 
-       << "=================== EXIF Data ===================\n";
-    os << std::string(indent * 2, ' ')
-       << std::left << std::setw(40) << "Key"
-       << " | " << std::left << std::setw(28) << "Tag Label"
-       << " | " << std::setw(10) << "Type"
-       << " | Value\n";
-    os << std::string(indent * 2, ' ') 
-       << std::string(120, '-') << "\n";
-
-    for (const auto& datum : exifData) {
-        printExifDatum(datum, os, indent);
-    }
-
-    os << std::string(indent * 2, ' ') 
-       << "=================================================\n";
-}
-
-Exiv2::ExifData readExifData(const std::string& imagePath);
 typedef struct{
     std::string make;           // 设备制造商
     std::string model;          // 设备型号
@@ -68,26 +26,17 @@ typedef struct {
     CAMERA_INFO_T cameraInfo;
     LOCATION_INFO_T locationInfo;
 }IMAGE_INFO_T;
+
 int BaiduReverseGeocode_Offical(
-    std::string ak, 
+    std::string ak,
+    std::string sk,
     double latitude, 
     double longitude,
     IMAGE_INFO_T& imageInfo
 );
-void addExifInfoToBottom_OpenCV(
-    const std::string& inputPath,
-    const std::string& outputPath,
-    const std::string& dateTime,
-    const std::string& cameraLens,
-    const std::string& exposure,
-    const std::string& location);
-void addExifInfoToBottom_CImg(
-    const std::string& inputPath,
-    const std::string& outputPath,
-    const std::string& dateTime,
-    const std::string& cameraLens,
-    const std::string& exposure,
-    const std::string& location);
+
+
+
 static const std::map<int, std::string> BaiduStatusMessages = {
     {0,   "正常"},
     {1,   "服务器内部错误 该服务响应超时或系统内部错误，请留下联系方式"},
@@ -113,4 +62,5 @@ static const std::map<int, std::string> BaiduStatusMessages = {
     {401, "当前并发量已经超过约定并发配额，限制访问并发控制超限，请控制并发量或联系我们"},
     {402, "当前并发量已经超过约定并发配额，并且服务总并发量也已经超过设定的总并发配额，限制访问并发控制超限，请控制并发量或联系我们"}
 };
-#endif // _DEMO_HEADFILE_HPP
+
+#endif // _EXIFWATERMARK_INCLUDE_GEOCOORDTOLOCAL_HPP

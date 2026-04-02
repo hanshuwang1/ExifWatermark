@@ -1,15 +1,16 @@
 {
-    "version": 2,
+    "version": 4,
     "configurePresets": [
         {
-            "name": "exif_demo",
-            "displayName": "exif_demo Preset",
+            "name": "ExifWatermarker",
+            "displayName": "ExifWatermarker Preset",
             "description": "Preset to use exiv2",
             "binaryDir": "${sourceDir}/build",
             "generator": "Ninja",
             "cacheVariables": {
                 "Exiv2_DIR": "./external/exiv2/lib/cmake/exiv2",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                
             }
         }
     ]

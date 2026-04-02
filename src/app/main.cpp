@@ -1,5 +1,8 @@
 // #include "./external/exiv2/include/exiv2/exiv2.hpp"
-#include "headfile.hpp"
+#include "AddExif/AddExifCImg.hpp"
+#include "AddExif/AddExifOpencv.hpp"
+#include "Baidu/BaiduReverseGeocode.hpp"
+#include "ReadExif/ReadExif.hpp"
 
 static std::string formatFloat(double value, int digits) {
     std::ostringstream oss;
@@ -8,6 +11,10 @@ static std::string formatFloat(double value, int digits) {
 }
 
 int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cerr << "用法: " << argv[0] << " <图片路径>\n";
+        return 1;
+    }
     /* (1) get image path */
     std::string path;
     if (argc == 2) {
@@ -16,7 +23,11 @@ int main(int argc, char* argv[]) {
         std::cout << "please enter the image path: ";
         std::getline(std::cin, path);
     }
-    Exiv2::ExifData exifData = readExifData(path);
+    // Exiv2::ExifData exifData = readExifData(path);
+    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open(path);
+    assert(image.get() != nullptr);
+    image->readMetadata();
+    Exiv2::ExifData exifData = image->exifData();
 
     /* (2) print and analyze exif data */
     IMAGE_INFO_T imageInfo;
@@ -39,8 +50,9 @@ int main(int argc, char* argv[]) {
     imageInfo.locationInfo.latitude = degrees + minutes / 60.0 + seconds / 3600.0;
 
     /* (3) GPS to Real Position */
-    std::string baiduMap_ak = "your baidu map ak"; // visit https://lbsyun.baidu.com/apiconsole/key
-    BaiduReverseGeocode_Offical(baiduMap_ak, 
+    std::string baiduMap_ak = "your baidumap ak"; // visit https://lbsyun.baidu.com/apiconsole/key
+    std::string baiduMap_sk = "your baidumap sk";
+    BaiduReverseGeocode_Offical(baiduMap_ak, baiduMap_sk,
         imageInfo.locationInfo.latitude, 
         imageInfo.locationInfo.longitude,
         imageInfo);

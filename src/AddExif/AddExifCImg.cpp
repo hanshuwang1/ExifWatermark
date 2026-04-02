@@ -1,8 +1,8 @@
 #include <string>
 #include <vector>
-#include "CImg.h"
+#include <CImg/CImg.h>
 #include <iostream>
-#include <ft2build.h>
+#include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
@@ -116,7 +116,7 @@ void addExifInfoToBottom_CImg(
 
     try {
         // font style
-        FreeTypeRenderer ft("./file/SourceHanSansCN-Bold.otf", 36);
+        FreeTypeRenderer ft("./assets/SourceHanSansCN-Bold.otf", 36);
 
         unsigned char white[3] = {255, 255, 255};
         unsigned char gray[3]  = {220, 220, 220};

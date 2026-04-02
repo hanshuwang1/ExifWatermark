@@ -1,11 +1,10 @@
-#include "headfile.hpp" 
+#include <string>
+#include <iostream>
 #include <opencv4/opencv2/opencv.hpp>
 #include <opencv4/opencv2/core.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/freetype.hpp>
-#include <string>
-#include <iostream>
 #include <freetype2/ft2build.h>
 
 void addExifInfoToBottom_OpenCV(
@@ -38,8 +37,8 @@ void addExifInfoToBottom_OpenCV(
 
     // use FreeType2 to draw text supporting CN
     cv::Ptr<cv::freetype::FreeType2> ft2 = cv::freetype::createFreeType2();
-    std::string fontPath = "./file/msyhl.ttc";  
-    std::string fontPath_bold = "./file/SourceHanSansCN-Bold.otf";
+    std::string fontPath = "./assets/msyhl.ttc";  
+    std::string fontPath_bold = "./assets/SourceHanSansCN-Bold.otf";
 
     // draw text
     ft2->loadFontData(fontPath_bold.c_str(), 0); 

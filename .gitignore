@@ -49,3 +49,4 @@ Makefile
 
 # project files
 *.code-workspace
+.vscode/

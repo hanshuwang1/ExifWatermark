@@ -1,75 +1,47 @@
 cmake_minimum_required(VERSION 3.25)
-project(exif_demo)
+project(ExifWatermarker VERSION 1.0.0 LANGUAGES CXX)
 
-# find exiv2 package 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+# find dependencies 
 find_package(Exiv2 REQUIRED CONFIG)
-
-# add demo executable
-add_executable(exif_demo
-    main.cpp
-    ./src/AddExifCImg.cpp
-    ./src/AddExifOpencv.cpp
-    ./src/GeoCoordToLocal.cpp
-    ./src/ReadExif.cpp
-)
-
-target_include_directories(exif_demo PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/src
-)
-# link exiv2 library to demo executable
-find_package(Exiv2 REQUIRED CONFIG)
-target_link_libraries(exif_demo
-    PRIVATE
-        Exiv2::exiv2lib
-
-)
-
-# link  OpenSSL EVP API（EVP_MD_CTX_free）
 find_package(OpenSSL REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        OpenSSL::Crypto
-)
-
-# link libcurl library to demo executable
 find_package(CURL REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        CURL::libcurl
-)
-
-# link nlohmann_json library to demo executable
 find_package(nlohmann_json REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        nlohmann_json::nlohmann_json
-)
 
-# link CImg library to demo executable
 add_definitions(-Dcimg_use_jpeg)   # 启用 JPEG 支持
-
-# link jpeg library to demo executable
 find_package(JPEG REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        JPEG::JPEG
-)
-
-# link OpenCV library to demo executable
 find_package(OpenCV REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        ${OpenCV_LIBS}
-)
-target_include_directories(exif_demo
-    PRIVATE
-        ${OpenCV_INCLUDE_DIRS}
+find_package(Freetype REQUIRED)
+
+
+# include headers
+include_directories(${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/external
 )
 
-# link freetype library to demo executable
-find_package(Freetype REQUIRED)
-target_link_libraries(exif_demo
-    PRIVATE
-        Freetype::Freetype
-)
+
+# add subdirectory
+add_subdirectory(src/AddExif)
+add_subdirectory(src/app)
+add_subdirectory(src/Baidu)
+add_subdirectory(src/ReadExif)
+# add_subdirectory(external)
+
+# install and release
+# install(TARGETS ExifWatermarker
+#     RUNTIME DESTINATION .
+#     COMPONENT Runtime
+# )
+
+# install(TARGETS ExifWatermarker
+#     RUNTIME_DEPENDENCIES
+#     COMPONENT Runtime
+#     DESTINATION .
+#     PRE_EXCLUDE_REGEXES "api-ms-" "ext-ms-" ".*system32/.*"
+#     POST_EXCLUDE_REGEXES ".*KERNEL32.dll" ".*MSVCRT.dll"
+# )
+
+
