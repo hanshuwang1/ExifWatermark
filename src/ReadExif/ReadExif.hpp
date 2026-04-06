@@ -2,6 +2,7 @@
 #define _EXIFWATERMARK_INCLUDE_READEXIF_HPP
 #include <iostream>
 #include <exiv2/exiv2.hpp>
+#include "Baidu/BaiduReverseGeocode.hpp"
 template<typename Stream = std::ostream>
 void printExifDatum(const Exiv2::Exifdatum& datum, Stream& os = std::cout, int indent = 0)
 {
@@ -44,5 +45,7 @@ void printExifData(const Exiv2::ExifData& exifData, Stream& os = std::cout, int 
 }
 
 Exiv2::ExifData readExifData(const std::string& imagePath);
+void getCameraInfo(const Exiv2::ExifData& exifData, IMAGE_INFO_T& imageInfo);
+std::pair<double, double> getGPS(const Exiv2::ExifData& exifData);
 
 #endif // _EXIFWATERMARK_INCLUDE_READEXIF_HPP

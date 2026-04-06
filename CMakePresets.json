@@ -1,17 +1,90 @@
 {
-    "version": 4,
-    "configurePresets": [
-        {
-            "name": "ExifWatermarker",
-            "displayName": "ExifWatermarker Preset",
-            "description": "Preset to use exiv2",
-            "binaryDir": "${sourceDir}/build",
-            "generator": "Ninja",
-            "cacheVariables": {
-                "Exiv2_DIR": "./external/exiv2/lib/cmake/exiv2",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-                
-            }
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": true,
+        "Exiv2_DIR": "./external/exiv2/lib/cmake/exiv2"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug 构建（带测试）",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release 构建",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "debug",
+      "displayName": "Build Debug",
+      "configurePreset": "debug",
+      "inheritConfigureEnvironment": true
+    },
+    {
+      "name": "release",
+      "displayName": "Build Release",
+      "configurePreset": "release",
+      "inheritConfigureEnvironment": true
+    }
+  ],
+
+  "testPresets": [
+    {
+      "name": "test-debug",
+      "displayName": "运行所有单元测试（Debug）",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      },
+      "execution": {
+        "stopOnFailure": false,
+        "noTestsAction": "error"
+      }
+    },
+    {
+      "name": "test-release",
+      "displayName": "运行所有单元测试（Release）",
+      "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "test-quick",
+      "displayName": "快速测试（只跑 ReadExif 和 AddExif）",
+      "configurePreset": "debug",
+      "filter": {
+        "include": {
+          "name": "ReadExif|AddExif"
         }
-    ]
+      },
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
 }

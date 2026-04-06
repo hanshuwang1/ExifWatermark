@@ -4,11 +4,7 @@
 #include "Baidu/BaiduReverseGeocode.hpp"
 #include "ReadExif/ReadExif.hpp"
 namespace fs = std::filesystem;
-static std::string formatFloat(double value, int digits) {
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(digits) << value;
-    return oss.str();
-}
+
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -31,23 +27,9 @@ int main(int argc, char* argv[]) {
 
     /* (2) print and analyze exif data */
     IMAGE_INFO_T imageInfo;
-    imageInfo.date = exifData["Exif.Image.DateTime"].toString();
-    imageInfo.cameraInfo.make = exifData["Exif.Image.Make"].toString();
-    imageInfo.cameraInfo.model = exifData["Exif.Image.Model"].toString();
-    imageInfo.cameraInfo.software = exifData["Exif.Image.Software"].toString();
-    imageInfo.cameraInfo.ExposureTime = "1/" + formatFloat(1.0 / exifData["Exif.Photo.ExposureTime"].toFloat(), 0);
-    imageInfo.cameraInfo.FNumber = "f/" + formatFloat(exifData["Exif.Photo.FNumber"].toFloat(), 1);
-    imageInfo.cameraInfo.ISO = exifData["Exif.Photo.ISOSpeedRatings"].toString();
-    imageInfo.cameraInfo.FocalLength = formatFloat(exifData["Exif.Photo.FocalLength"].toFloat(), 0) + "mm";
-    //rational to float
-    double degrees = exifData["Exif.GPSInfo.GPSLongitude"].toFloat();
-    double minutes = exifData["Exif.GPSInfo.GPSLongitude"].toFloat(1);
-    double seconds = exifData["Exif.GPSInfo.GPSLongitude"].toFloat(2);
-    imageInfo.locationInfo.longitude = degrees + minutes / 60.0 + seconds / 3600.0;
-    degrees = exifData["Exif.GPSInfo.GPSLatitude"].toFloat();
-    minutes = exifData["Exif.GPSInfo.GPSLatitude"].toFloat(1);
-    seconds = exifData["Exif.GPSInfo.GPSLatitude"].toFloat(2);
-    imageInfo.locationInfo.latitude = degrees + minutes / 60.0 + seconds / 3600.0;
+    getCameraInfo(exifData, imageInfo);
+    std::tie(imageInfo.locationInfo.latitude, imageInfo.locationInfo.longitude) = getGPS(exifData);
+    
 
     /* (3) GPS to Real Position */
     std::string baiduMap_ak = "your_baidu_map_ak"; // visit https://lbsyun.baidu.com/apiconsole/key
