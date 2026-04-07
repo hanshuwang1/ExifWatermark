@@ -62,6 +62,21 @@ int main(int argc, char* argv[]) {
         imageInfo.cameraInfo.FocalLength + " " + imageInfo.cameraInfo.ExposureTime + " " + imageInfo.cameraInfo.FNumber + " ISO" + imageInfo.cameraInfo.ISO,
         imageInfo.locationInfo.province + " " + imageInfo.locationInfo.city + " " + imageInfo.locationInfo.district
     );
+    std::string logoPath = logoDir + "Apple_Black.png"; // default logo
+    std::string cameraMake = toLowerCopy(imageInfo.cameraInfo.make);
+    std::string cameraModel = toLowerCopy(imageInfo.cameraInfo.model);
+    for(const auto& logo : cameraLogos) {
+        if (toLowerCopy(logo).find(cameraMake) != std::string::npos || 
+            toLowerCopy(logo).find(cameraModel) != std::string::npos) {
+            logoPath = logoDir + logo;
+            break;
+        }
+    }
+    addLogo_OpenCV(
+        path.substr(0, path.find_last_of('.')) + "opencv.jpg",
+        path.substr(0, path.find_last_of('.')) + "final.jpg",
+        logoPath // TODO: 根据相机型号选择对应的logo
+    );
     // addExifInfoToBottom_CImg(
     //     path,
     //     path.substr(0, path.find_last_of('.')) + "CImg.jpg",

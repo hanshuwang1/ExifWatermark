@@ -12,7 +12,7 @@ protected:
 
     void SetUp() override {
         test_image_path = "tests/data/test_with_exif.jpg";
-        no_exif_image   = "tests/data/test_no_exif.jpg";
+        no_exif_image   = "tests/data/test_no_exif2.jpg";
 
         ASSERT_TRUE(std::filesystem::exists(test_image_path)) << "测试图片不存在: " << test_image_path;
         ASSERT_TRUE(std::filesystem::exists(no_exif_image)) << "无 EXIF 图片不存在: " << no_exif_image;

@@ -15,12 +15,13 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_STANDARD": "20",
         "CMAKE_CXX_STANDARD_REQUIRED": true,
-        "Exiv2_DIR": "./external/exiv2/lib/cmake/exiv2"
+        "Exiv2_DIR": "./external/exiv2/lib/cmake/exiv2",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true
       }
     },
     {
       "name": "debug",
-      "displayName": "Debug 构建（带测试）",
+      "displayName": "Debug with tests",
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -28,7 +29,7 @@
     },
     {
       "name": "release",
-      "displayName": "Release 构建",
+      "displayName": "Release",
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
@@ -80,6 +81,19 @@
       "filter": {
         "include": {
           "name": "ReadExif|AddExif"
+        }
+      },
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "test-ReadExif",
+      "displayName": "快速测试（只跑 ReadExif ）",
+      "configurePreset": "debug",
+      "filter": {
+        "include": {
+          "name": "ReadExif"
         }
       },
       "output": {

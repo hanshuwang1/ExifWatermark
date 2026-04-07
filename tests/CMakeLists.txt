@@ -1,7 +1,6 @@
 add_executable(ExifWatermarkTests
     TestReadExif.cpp
     TestAddExif.cpp
-    TestBaiduApi.cpp
     # 如果以后测试文件增多，可以继续添加
 )
 
