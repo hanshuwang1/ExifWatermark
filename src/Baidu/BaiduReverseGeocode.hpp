@@ -30,8 +30,6 @@ typedef struct {
 int BaiduReverseGeocode_Offical(
     std::string ak,
     std::string sk,
-    double latitude, 
-    double longitude,
     IMAGE_INFO_T& imageInfo
 );
 

@@ -4,7 +4,8 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         MyProject::AddExif
         MyProject::ReadExif
-        MyProject::BaiduReverseGeocode  
+        MyProject::BaiduReverseGeocode
+        MyProject::Args
 )
 
 if(WIN32 AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.21)

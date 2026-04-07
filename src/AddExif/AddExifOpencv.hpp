@@ -2,6 +2,7 @@
 #define _EXIFWATERMARK_INCLUDE_ADDEXIFOPENCV_HPP
 #include <string>
 #include <vector>
+#include "Baidu/BaiduReverseGeocode.hpp"
 // logo 
 const std::string logoDir = "./assets/logo/Camera-Logos-SVG/PNG/";
 const std::vector<std::string> cameraLogos = {
@@ -49,10 +50,8 @@ const std::vector<std::string> cameraLogos = {
 void addExifInfoToBottom_OpenCV(
     const std::string& inputPath,
     const std::string& outputPath,
-    const std::string& dateTime,
-    const std::string& cameraLens,
-    const std::string& exposure,
-    const std::string& location);
+    IMAGE_INFO_T imageInfo,
+    bool addSeparator = true);
 
 void addLogo_OpenCV(
     const std::string& inputPath,

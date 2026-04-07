@@ -8,6 +8,8 @@
 #include <opencv4/opencv2/imgcodecs.hpp>
 #include <opencv4/opencv2/freetype.hpp>
 #include <freetype2/ft2build.h>
+#include "args/args.hpp"
+#include "AddExif/AddExifOpencv.hpp"
 
 /**
   * @brief add text info
@@ -17,10 +19,8 @@
 void addExifInfoToBottom_OpenCV(
     const std::string& inputPath,
     const std::string& outputPath,
-    const std::string& dateTime,
-    const std::string& cameraLens,
-    const std::string& exposure,
-    const std::string& location)
+    IMAGE_INFO_T imageInfo,
+    bool addSeparator)
 {
     cv::Mat img = cv::imread(inputPath);
     if (img.empty()) {
@@ -48,6 +48,10 @@ void addExifInfoToBottom_OpenCV(
     std::string fontPath_bold = "./assets/fonts/SourceHanSansCN-Bold.otf";
 
     // draw text
+    std::string cameraLens = imageInfo.cameraInfo.make + " " + imageInfo.cameraInfo.model;
+    std::string exposure = imageInfo.cameraInfo.FocalLength + " " + imageInfo.cameraInfo.ExposureTime + " " + imageInfo.cameraInfo.FNumber + " ISO" + imageInfo.cameraInfo.ISO;
+    std::string location = imageInfo.locationInfo.province + " " + imageInfo.locationInfo.city + " " + imageInfo.locationInfo.district;
+    std::string dateTime = imageInfo.date;
     ft2->loadFontData(fontPath_bold.c_str(), 0); 
     ft2->putText(result, cameraLens, cv::Point(40, h + 30), 42, cv::Scalar(0, 0, 0), -1, cv::LINE_AA, false);
     ft2->putText(result, exposure, cv::Point(w - 600, h + 30), 42, cv::Scalar(0, 0, 0), -1, cv::LINE_AA, false);
@@ -56,8 +60,10 @@ void addExifInfoToBottom_OpenCV(
     ft2->putText(result, dateTime, cv::Point(40, h + 90), 30, cv::Scalar(0, 0, 0), -1, cv::LINE_AA, false);
 
     // draw seperator line
-    cv::line(result, cv::Point(w - 650, h + 25), cv::Point(w - 650, h + 150), 
-             cv::Scalar(200, 200, 200), 1, cv::LINE_AA);
+    if (addSeparator) {
+        cv::line(result, cv::Point(w - 650, h + 25), cv::Point(w - 650, h + 150), 
+                 cv::Scalar(200, 200, 200), 1, cv::LINE_AA);
+    }
 
     cv::imwrite(outputPath, result);
     std::cout << "opencv add Exif info to: " << outputPath << std::endl;

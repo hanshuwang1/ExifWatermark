@@ -28,6 +28,7 @@ add_subdirectory(src/AddExif)
 add_subdirectory(src/app)
 add_subdirectory(src/Baidu)
 add_subdirectory(src/ReadExif)
+add_subdirectory(src/args)
 # add_subdirectory(external)
 
 # install and release

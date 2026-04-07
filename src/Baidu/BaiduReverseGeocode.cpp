@@ -134,7 +134,7 @@ bool VerifyCoord(double latitude, double longitude) {
   * @param longtitude
   * @retval 0 成功 -1 失败
   */
-int BaiduReverseGeocode_Offical(std::string ak, std::string sk, double latitude, double longitude, IMAGE_INFO_T& imageInfo) {
+int BaiduReverseGeocode_Offical(std::string ak, std::string sk, IMAGE_INFO_T& imageInfo) {
 
     // 服务地址
     // libcurl默认是不支持SSL的, 如果需要支持https，请在libcurl的编译选项中设置
@@ -149,7 +149,7 @@ int BaiduReverseGeocode_Offical(std::string ak, std::string sk, double latitude,
         params["output"]     = "json";
         params["coordtype"]     = "bd09ll";
         params["extensions_poi"]     = "1";
-        params["location"]     = std::to_string(latitude) + "," + std::to_string(longitude);
+        params["location"]     = std::to_string(imageInfo.locationInfo.latitude) + "," + std::to_string(imageInfo.locationInfo.longitude);
 
     std::string query_str = "";
     for (auto& i : params) {

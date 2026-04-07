@@ -11,8 +11,9 @@ cmake --install build --prefix your_path --config Release
 - put your image in your_path, drag the image onto exe, then picture will be generated in current path.
   
 # reference
-![example](./assets/dsl.jpg)
-![example](./assets/dslopencv.jpg)
+![original](./assets/image/dsl.jpg)
+![with_exif](./assets/image/dslopencv.jpg)
+![with_exif_logo](./assets/image/dslfinal.jpg)
 # tips
 - chinese characters in path is not allowed
 - according to baidumap regulation, any individual is strictly prohibited from transferring, lending the obtained AK or related content developed based on them to any other third party. so release is no longer usable.
