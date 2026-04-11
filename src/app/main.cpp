@@ -62,8 +62,10 @@ int main(int argc, char* argv[]) {
         std::string cameraModel = toLowerCopy(imageInfo.cameraInfo.model);
         for(const auto& logo : cameraLogos) {
             if (toLowerCopy(logo).find(cameraMake) != std::string::npos || 
-                toLowerCopy(logo).find(cameraModel) != std::string::npos) {
+                toLowerCopy(logo).find(cameraModel) != std::string::npos ||
+                toLowerCopy(logo).find(clip_before_first(cameraModel, " ")) != std::string::npos) {
                 logoPath = logoDir + logo;
+                std::cout << "Matched camera logo: " << logo << std::endl;
                 break;
             }
         }

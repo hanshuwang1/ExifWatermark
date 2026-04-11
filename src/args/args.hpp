@@ -15,8 +15,7 @@ struct ProgramArgs {
     bool add_logo = false;
 };
 
-// 声明解析函数
 ProgramArgs parse_arguments(int argc, char* argv[]);
-
+std::string clip_before_first(const std::string& origin, const std::string& find_str);
 
 #endif // _SRC_ARGS_ARGS_HPP

@@ -23,11 +23,11 @@ ProgramArgs parse_arguments(int argc, char* argv[])
     
     program.add_argument("--ak")
         .help("baidu map ak, visit https://lbsyun.baidu.com/apiconsole/key")
-        .default_value(std::string{""});
+        .default_value(std::string{"9vfAvAFlaNNDH8Ea2gjVtyDDWDYEP1jM"});
     
     program.add_argument("--sk")
         .help("baidu map sk corresponding to ak")
-        .default_value(std::string{""});
+        .default_value(std::string{"rxgdkXTS8N9dhah86C2b9yZvt976YT9m"});
 
     program.add_argument("--add-logo")
         .help("enable adding camera logo to image")
@@ -52,4 +52,18 @@ ProgramArgs parse_arguments(int argc, char* argv[])
     args.add_logo     = program["--add-logo"] == true;
 
     return args;
+}
+
+/**
+  * @brief clip before first space substr
+  * @param origin
+  * @param find_str
+  * @retval clip_str
+  */
+std::string clip_before_first(const std::string& origin, const std::string& find_str) {
+    size_t pos = origin.find(find_str);
+    if (pos != std::string::npos) {
+        return origin.substr(0, pos);
+    }
+    return origin;
 }
