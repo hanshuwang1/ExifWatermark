@@ -11,25 +11,30 @@ ProgramArgs parse_arguments(int argc, char* argv[])
         .help("image file path")
         .required();
 
-    program.add_argument("-v", "--verbose")
+    program.add_argument("--verbose")
         .default_value(false)
         .implicit_value(true)
         .help("enable verbose output");
-
-    program.add_argument("--reverse-geocode")
-        .help("enable baidu map reverse geocode")
+    
+    program.add_argument("--reverse_geocode_local")
+        .help("enable local reverse geocode using GeoNames data")
         .default_value(false)
         .implicit_value(true);
+
+    program.add_argument("--reverse_geocode_online")
+        .help("enable baidu map reverse geocode")
+        .default_value(false)
+        .implicit_value(false);
     
     program.add_argument("--ak")
         .help("baidu map ak, visit https://lbsyun.baidu.com/apiconsole/key")
-        .default_value(std::string{"9vfAvAFlaNNDH8Ea2gjVtyDDWDYEP1jM"});
+        .default_value(std::string{""});
     
     program.add_argument("--sk")
         .help("baidu map sk corresponding to ak")
-        .default_value(std::string{"rxgdkXTS8N9dhah86C2b9yZvt976YT9m"});
+        .default_value(std::string{""});
 
-    program.add_argument("--add-logo")
+    program.add_argument("--add_logo")
         .help("enable adding camera logo to image")
         .default_value(false)
         .implicit_value(true);
@@ -46,10 +51,11 @@ ProgramArgs parse_arguments(int argc, char* argv[])
     ProgramArgs args;
     args.input_file = program.get<std::string>("input");
     args.verbose    = program["--verbose"] == true;
-    args.reverse_geocode = program["--reverse-geocode"] == true;
+    args.reverse_geocode_online = program["--reverse_geocode_online"] == true;
+    args.reverse_geocode_local = program["--reverse_geocode_local"] == true;
     args.ak           = program.get<std::string>("--ak");
     args.sk           = program.get<std::string>("--sk");
-    args.add_logo     = program["--add-logo"] == true;
+    args.add_logo     = program["--add_logo"] == true;
 
     return args;
 }

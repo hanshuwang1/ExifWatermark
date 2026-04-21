@@ -2,6 +2,7 @@
 #include "AddExif/AddExifCImg.hpp"
 #include "AddExif/AddExifOpencv.hpp"
 #include "Baidu/BaiduReverseGeocode.hpp"
+#include "GeoNamesCN/GeoNames.hpp"
 #include "ReadExif/ReadExif.hpp"
 #include "args/args.hpp"
 namespace fs = std::filesystem;
@@ -22,9 +23,9 @@ int main(int argc, char* argv[]) {
     
 
     /* (3) GPS to Real Position */
-    std::string baiduMap_ak = args.ak; // visit https://lbsyun.baidu.com/apiconsole/key
-    std::string baiduMap_sk = args.sk;
-    if(args.reverse_geocode) {
+    if(args.reverse_geocode_online) {
+        std::string baiduMap_ak = args.ak; // visit https://lbsyun.baidu.com/apiconsole/key
+        std::string baiduMap_sk = args.sk;
         if (baiduMap_ak.empty() || baiduMap_sk.empty()) {
             std::cerr << "Baidu Map AK and SK are required for reverse geocoding.\n";
             return 1;
@@ -34,7 +35,9 @@ int main(int argc, char* argv[]) {
             return 1;
         }
     }
-    
+    if(args.reverse_geocode_local) {
+        LocalReverseGeocode(imageInfo, "./assets/GeoNames/allCountries/china_no_ppl.txt");
+    }
     std::cout << "info" << std::endl;
     std::cout << "date: " << imageInfo.date << std::endl;
     std::cout << "manufacturer: " << imageInfo.cameraInfo.make << std::endl;

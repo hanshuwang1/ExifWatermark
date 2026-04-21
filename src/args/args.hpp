@@ -9,7 +9,8 @@
 struct ProgramArgs {
     std::string input_file;
     bool verbose = false;
-    bool reverse_geocode = false;
+    bool reverse_geocode_local = false;
+    bool reverse_geocode_online = false;
     std::string ak;
     std::string sk;
     bool add_logo = false;

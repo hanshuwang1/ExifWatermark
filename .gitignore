@@ -53,3 +53,8 @@ Makefile
 release/
 *.zip
 null
+run.sh
+CN/
+cities500/
+allCountries.txt
+china_all.txt
