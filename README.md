@@ -21,9 +21,8 @@ cmake --build --preset release
     --add-logo         enable adding camera logo to image 
   
 # reference
-![original](./assets/image/dsl.jpg)
-![with_exif](./assets/image/dslopencv.jpg)
 ![with_exif_logo](./assets/image/dslfinal.jpg)
+![with_exif_logo](./assets/image/woodfinal.jpg)
 
 # tips
 - chinese characters in path is not allowed
