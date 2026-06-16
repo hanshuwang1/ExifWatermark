@@ -12,13 +12,14 @@ cmake --build --preset release
   input              image file path [required]
 
 - Optional arguments:
-    -h, --help         shows help message and exits 
-    -v, --version      prints version information and exits 
-    -v, --verbose      enable verbose output 
-    --reverse-geocode  enable baidu map reverse geocode 
-    --ak               baidu map ak, visit https://lbsyun.baidu.com/apiconsole/key 
-    --sk               baidu map sk corresponding to ak
-    --add-logo         enable adding camera logo to image 
+  -h, --help                shows help message and exits  
+  -v, --version             prints version information and exits  
+  --verbose                 enable verbose output  
+  --reverse_geocode_local   enable local reverse geocode using GeoNames data  
+  --reverse_geocode_online  enable baidu map reverse geocode  
+  --ak                      baidu map ak, visit https://lbsyun.baidu.com/apiconsole/key [nargs=0..1] [default: ""]  
+  --sk                      baidu map sk corresponding to ak [nargs=0..1] [default: ""]  
+  --add_logo                enable adding camera logo to image  
   
 # reference
 ![with_exif_logo](./assets/image/dslfinal.jpg)
@@ -26,4 +27,3 @@ cmake --build --preset release
 
 # tips
 - chinese characters in path is not allowed
-- according to baidumap regulation, any individual is strictly prohibited from transferring, lending the obtained AK or related content developed based on them to any other third party. so release is no longer usable.
