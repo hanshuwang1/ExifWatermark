@@ -27,3 +27,18 @@ cmake --build --preset release
 
 # tips
 - chinese characters in path is not allowed
+
+# Acknowledgements
+## base
+[exiv2](https://github.com/Exiv2/exiv2.git) - a C++ library and a command-line utility to read, write, delete and modify Exif, IPTC, XMP and ICC image metadata.
+[argparse](https://github.com/p-ranav/argparse.git) - header-only argumnets parse library
+[CImg](https://github.com/GreycLab/CImg.git) - a small and open-source C++ library for image processing
+[openCV](https://github.com/opencv/opencv.git) - powerful Open Source Computer Vision Library
+[freetype](https://freetype.org) - for chinese characters render
+## online reverse geocode
+[nlohmann-json](https://github.com/nlohmann/json.git) - JSON for Modern C++
+[curl](https://github.com/curl/curl.git) - a command-line tool for transferring data from or to a server using URLs
+[openssl](https://github.com/openssl/openssl.git) - md5 Encryption
+## offline reverse geocode
+[GeoNames](https://www.geonames.org/) - a global geographical name database project that provides extensive geographic location data, such as countries, provinces, cities, counties, towns, POIs, latitude/longitude coordinates, and administrative division information.  
+[GeoNamesCN](https://github.com/CZAsTc/GeoNamesCN.git) - filter place name data for Chinese regions
